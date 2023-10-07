@@ -37,55 +37,19 @@ class Solution
     public:
     Node* pairWiseSwap(struct Node* head) 
     {
-        Node *even = head;
-        Node *odd = head->next? head->next : NULL;
-        if(!odd) return head;
-        
-        
-        Node *e_cur = even;
-        Node *o_cur = odd;
-        Node *temp = odd->next;
-        
-        even->next = NULL;
-        odd->next = NULL;
-        int ok = 1;
-        while(temp) {
-            if(ok) {
-                e_cur->next = temp;
-                e_cur = temp;
-                temp = temp->next;
-                e_cur->next = NULL;
-            } else{
-                o_cur->next = temp;
-                o_cur = temp;
-                temp = temp->next;
-                o_cur->next = NULL;
-            }
-            
-            ok = 1-ok;
+        if(head==NULL) return NULL;
+        Node* p = head;
+        Node* q = NULL;
+        Node *r = NULL;
+        int k = 2;
+        while(p && k--) {
+            r = q;
+            q = p;
+            p = p->next;
+            q->next = r;
         }
-        Node* ans = NULL;
-        ok = 1;
-        while(even || odd) {
-            if(ok) {
-                if(ans == NULL) {
-                    ans = odd;
-                    temp = ans;
-                    odd = odd->next;
-                }
-                else if(odd){
-                    temp->next = odd;
-                    temp = odd;
-                    odd = odd->next;
-                }
-            } else if(even){
-                temp->next = even;
-                temp = even;
-                even = even->next;
-            }
-            ok = 1-ok;
-        }
-        return ans;
+        head->next = pairWiseSwap(p);
+        return q;
     }
 };
 
