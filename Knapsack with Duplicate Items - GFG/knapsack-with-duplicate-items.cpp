@@ -9,26 +9,24 @@ using namespace std;
 
 class Solution{
 public:
-    int solve(int N, int W, int val[], int wt[], vector<vector<int>>&dp) {
-        if(N==0) {
-            if(W>=wt[0]) return W/wt[0]*val[0];
-            return 0;
-        }
-        if(dp[N][W]!=-1) return dp[N][W];
-        
-        int notTake = solve(N-1,W,val,wt,dp) + 0;
-        int take = 0;
-        if(W>=wt[N]) {
-            take = solve(N,W-wt[N],val,wt,dp) + val[N];
-        }
-        
-        return dp[N][W] = max(take,notTake);
-    }
+    
     int knapSack(int N, int W, int val[], int wt[])
     {
         // code here
-        vector<vector<int>>dp(N, vector<int>(W+1,-1));
-        return solve(N-1,W,val,wt,dp);
+        vector<vector<int>>dp(N, vector<int>(W+1,0));
+        for(int i=1;i<=W;i++) {
+            if(i>=wt[0]) dp[0][i] = i/wt[0]*val[0];
+        }
+        for(int i=1;i<N;i++) {
+            for(int j=1;j<=W;j++) {
+                int notTake = dp[i-1][j] + 0;
+                int take = 0;
+                if(j>=wt[i]) 
+                    take = val[i] + dp[i][j-wt[i]];
+                dp[i][j] = max(take,notTake);
+            }
+        }
+        return dp[N-1][W];
     }
 };
 
