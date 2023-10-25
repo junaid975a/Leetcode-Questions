@@ -13,7 +13,9 @@ public:
     int knapSack(int N, int W, int val[], int wt[])
     {
         // code here
-        vector<vector<int>>dp(N, vector<int>(W+1,0));
+        int dp[N][W+1];
+        memset(dp,0,sizeof(dp));
+        // vector<vector<int>>dp(N, vector<int>(W+1,0));
         for(int i=1;i<=W;i++) {
             if(i>=wt[0]) dp[0][i] = i/wt[0]*val[0];
         }
