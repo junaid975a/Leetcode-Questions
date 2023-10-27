@@ -15,7 +15,8 @@ class Solution{
         reverse(t.begin(),t.end());
         int n = s.size();
         
-        vector<vector<int>>dp(n+1, vector<int>(n+1,0));
+        int dp[n+1][n+1];
+        memset(dp,0,sizeof(dp));
         for(int i=1;i<=n;i++) {
             for(int j=1;j<=n;j++) {
                 if(s[i-1]==t[j-1])
